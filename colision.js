@@ -101,14 +101,26 @@ class Circle {
 
 let circles = [];
 
+// Función para generar colores RGB excluyendo tonos azules
+function getRandomNonBlueColor() {
+  let r, g, b;
+  do {
+    r = Math.floor(Math.random() * 200); // Evitar tonos extremadamente claros/blancos
+    g = Math.floor(Math.random() * 200);
+    b = Math.floor(Math.random() * 100); // Limitar el canal azul a un valor bajo
+  } while (b > r && b > g); // Asegurar que el azul nunca predomine
+
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
 function generateCircles(n) {
   circles = [];
   for (let i = 0; i < n; i++) {
     let radius = Math.random() * 20 + 20;
     let x = Math.random() * (window_width - radius * 2) + radius;
     let y = Math.random() * (window_height - radius * 2) + radius;
-    let color = `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
-    let speed = Math.random() * 4 + 1;
+    let color = getRandomNonBlueColor(); // Color generado sin tonalidades de azul
+    let speed = Math.random() * 1.5 + 0.5; // Velocidad reducida entre 0.5 y 2.0
     let text = `C${i + 1}`;
 
     let newCircle = new Circle(x, y, radius, color, text, speed);
